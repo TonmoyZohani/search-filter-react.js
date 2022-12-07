@@ -1,48 +1,29 @@
-.app {
-  margin: 50px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 900px;
-}
-
-
-.search {
-  padding: 10px;
-  font-size: 20px;
-}
-
-.list {
+* {
   padding: 0;
-  list-style: none;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+h2,
+h4 {
   text-align: center;
 }
 
-.listItem {
-  margin-bottom: 20px;
-  font-size: 25px;
-  color: #444;
-  font-weight: 300;
+.card {
+  border: 1px solid #444;
+  border-radius: 2px;
+  width: 180px;
+  height: 100px;
+  margin-bottom: 2px;
+  /* display: flex; */
 }
 
-table {
-  width: 100%;
-  margin: 50px 0px;
-  border-spacing: 15px;
-  color: #444;
+.card-inner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-tr {
-  margin-bottom: 20px;
-}
-
-th {
-  width: 250px;
-  text-align: left;
-  font-size: 20px;
-}
-
-td {
-  width: 250px;
-  font-size: 20px;
+.search {
+  text-align: center;
 }

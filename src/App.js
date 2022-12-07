@@ -1,44 +1,69 @@
-import React, { useState } from "react";
-import Table from "./Table";
-import { Users } from "./users";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 
 function App() {
-  const [text, setText] = useState("");
+  const [users, setUsers] = useState([]);
+  const [query, setQuery] = useState("");
 
-  const keys = ["first_name", "last_name", "email"];
+  useEffect(() => {
+    fetch("https://jsonplaceholder.typicode.com/users")
+      .then((resp) => resp.json())
+      .then((data) => setUsers(data));
+  }, []);
 
-  // const search = (data) => {
-  //   return data.filter((user) => user.first_name.toLowerCase().includes(text));
-  // };
-
-  const search = (data) => {
-    return data.filter((user) => {
-      return keys.some((key) => user[key].toLowerCase().includes(text));
-    });
+  const removeUser = (id) => {
+    const newUsers = users.filter((user) => user.id !== id);
+    setUsers(newUsers);
   };
 
   return (
-    <div className="app">
-      <input
-        type="text"
-        placeholder="Searching...."
-        className="search"
-        onChange={(e) => setText(e.target.value.toLowerCase())}
-      />
-      {/* <ul className="list">
-        {Users.filter((user) =>
-          user.first_name.toLowerCase().includes(text)
-        ).map((user) => {
-          return (
-            <li key={user.id} className="listItem">
-              {user.first_name}
-            </li>
-          );
-        })}
-      </ul> */}
-      <Table users={search(Users)} />
-    </div>
+    <>
+      <h2>Question 1 - Map & Filter</h2>
+
+      {/***************************** Filter method ********************************/}
+      <div className="search">
+        <h4>Search Here</h4>
+        <input
+          type="text"
+          placeholder="Search Here..."
+          onChange={(e) => setQuery(e.target.value.toLowerCase())}
+        />
+        {users
+          .filter((user) => user.name.toLowerCase().includes(query))
+          .map((user) => {
+            return (
+              <div className="container">
+                <div className="card" key={user.id}>
+                  <div className="card-inner">
+                    <div>
+                      <p>{user.name}</p>
+                      <p>{user.username}</p>
+                      <button type="btn" onClick={() => removeUser(user.id)}>
+                        Remove Id
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+      </div>
+
+      {/***************************** Map method ********************************/}
+      {/* {users.map((user) => {
+        return (
+          <div className="card" key={user.id}>
+            <div className="card-inner">
+              <p>{user.name}</p>
+              <p>{user.username}</p>
+              <button type="btn" onClick={() => removeUser(user.id)}>
+                Remove Id
+              </button>
+            </div>
+          </div>
+        );
+      })} */}
+    </>
   );
 }
 
